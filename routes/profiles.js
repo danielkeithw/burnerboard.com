@@ -4,7 +4,7 @@ const router = express.Router();
 const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 const FileSystem = require("./FileSystem");
 
-router.post("/:profileID", async function (req, res, next) {
+router.post("/:profileID", async (req, res, next) => {
 
 	var profileID = req.params.profileID;
 	var cloneFromBoardID = null;
@@ -39,7 +39,7 @@ router.post("/:profileID", async function (req, res, next) {
 	}
 });
 
-router.delete("/:profileID", async function (req, res, next) {
+router.delete("/:profileID", async (req, res, next) => {
 
 	var profileID = req.params.profileID;
 
@@ -61,7 +61,7 @@ router.delete("/:profileID", async function (req, res, next) {
 	}
 });
 
-router.get("/", async function (req, res, next) {
+router.get("/", async (req, res, next) => {
  
 	try {
 		var i = await DownloadDirectoryDS.listGlobalProfiles(null);
@@ -72,7 +72,7 @@ router.get("/", async function (req, res, next) {
 	}
 });
 
-router.get("/:profileID", async function (req, res, next) {
+router.get("/:profileID", async (req, res, next) => {
 
 	var profileID = req.params.profileID;
  
@@ -86,7 +86,7 @@ router.get("/:profileID", async function (req, res, next) {
 });
 
 
-router.get("/:profileID/DownloadDirectoryJSON", async function (req, res, next) {
+router.get("/:profileID/DownloadDirectoryJSON", async (req, res, next) => {
  
 	var profileID = req.params.profileID;
 	var result = [];
@@ -100,7 +100,7 @@ router.get("/:profileID/DownloadDirectoryJSON", async function (req, res, next) 
 
 });
 
-router.delete("/:profileID/:mediaType/:mediaLocalName", async function (req, res, next) {
+router.delete("/:profileID/:mediaType/:mediaLocalName", async (req, res, next) => {
 
 	var boardID = null;
 	var profileID = req.params.profileID;
@@ -124,7 +124,7 @@ router.delete("/:profileID/:mediaType/:mediaLocalName", async function (req, res
 	}
 });
 
-router.post("/:profileID/:mediaType/ReorderMedia", async function (req, res, next) {
+router.post("/:profileID/:mediaType/ReorderMedia", async (req, res, next) => {
 
 	var mediaArray = req.body.mediaArray;
 	var boardID = null;
@@ -143,7 +143,7 @@ router.post("/:profileID/:mediaType/ReorderMedia", async function (req, res, nex
 });
 
 
-router.post("/:profileID/AddFileFromGDrive", async function (req, res, next) {
+router.post("/:profileID/AddFileFromGDrive", async (req, res, next) => {
 
 	var oAuthToken = req.body.oauthToken;
 

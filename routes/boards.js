@@ -5,7 +5,7 @@ const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 const BatteryQueries = require("./BatteryQueries");
 const FileSystem = require("./FileSystem");
 
-router.get("/", async function (req, res, next) {
+router.get("/", async (req, res, next) => {
 
 	try {
 		var i = await DownloadDirectoryDS.listBoards(null);
@@ -16,7 +16,7 @@ router.get("/", async function (req, res, next) {
 	}
 });
 
-router.get("/locations/", async function (req, res, next) {
+router.get("/locations/", async (req, res, next) => {
 
 	try {
 		var i = await BatteryQueries.queryBoardLocations();
@@ -27,7 +27,7 @@ router.get("/locations/", async function (req, res, next) {
 	}
 });
 
-router.get("/:boardID", async function (req, res, next) {
+router.get("/:boardID", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
  
@@ -40,7 +40,7 @@ router.get("/:boardID", async function (req, res, next) {
 	}
 });
 
-router.post("/:boardID/profiles/:profileID", async function (req, res, next) {
+router.post("/:boardID/profiles/:profileID", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -75,7 +75,7 @@ router.post("/:boardID/profiles/:profileID", async function (req, res, next) {
 });
 
 
-router.delete("/:boardID/profiles/:profileID", async function (req, res, next) {
+router.delete("/:boardID/profiles/:profileID", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -99,7 +99,7 @@ router.delete("/:boardID/profiles/:profileID", async function (req, res, next) {
 });
 
 
-router.get("/:boardID/profiles", async function (req, res, next) {
+router.get("/:boardID/profiles", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
  
@@ -112,7 +112,7 @@ router.get("/:boardID/profiles", async function (req, res, next) {
 	}
 });
 
-router.get("/:boardID/profiles/:profileID", async function (req, res, next) {
+router.get("/:boardID/profiles/:profileID", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -127,7 +127,7 @@ router.get("/:boardID/profiles/:profileID", async function (req, res, next) {
 });
 
 
-router.get("/:boardID/batteryHistory", async function (req, res, next) {
+router.get("/:boardID/batteryHistory", async (req, res, next) => {
  
 	var results = [];
 
@@ -140,7 +140,7 @@ router.get("/:boardID/batteryHistory", async function (req, res, next) {
 	}
 });
 
-router.get("/:boardID/profiles/:profileID/listFiles", async function (req, res, next) {
+router.get("/:boardID/profiles/:profileID/listFiles", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -156,7 +156,7 @@ router.get("/:boardID/profiles/:profileID/listFiles", async function (req, res, 
 
 });
 
-router.post("/:boardID/activeProfile/:profileID/isGlobal/:isGlobal", async function (req, res, next) {
+router.post("/:boardID/activeProfile/:profileID/isGlobal/:isGlobal", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -180,7 +180,7 @@ router.post("/:boardID/activeProfile/:profileID/isGlobal/:isGlobal", async funct
 });
 
 
-router.post("/:boardID/deactivateProfile/:profileID/isGlobal/:isGlobal", async function (req, res, next) {
+router.post("/:boardID/deactivateProfile/:profileID/isGlobal/:isGlobal", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -201,7 +201,7 @@ router.post("/:boardID/deactivateProfile/:profileID/isGlobal/:isGlobal", async f
 	}
 
 });
-router.get("/:boardID/DownloadDirectoryJSON", async function (req, res, next) {
+router.get("/:boardID/DownloadDirectoryJSON", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 	var result = [];
@@ -228,7 +228,7 @@ router.get("/:boardID/DownloadDirectoryJSON", async function (req, res, next) {
 
 });
 
-router.get("/:boardID/profiles/:profileID/DownloadDirectoryJSON", async function (req, res, next) {
+router.get("/:boardID/profiles/:profileID/DownloadDirectoryJSON", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -250,7 +250,7 @@ router.get("/:boardID/profiles/:profileID/DownloadDirectoryJSON", async function
 });
 
 
-router.delete("/:boardID/profiles/:profileID/:mediaType/:mediaLocalName", async function (req, res, next) {
+router.delete("/:boardID/profiles/:profileID/:mediaType/:mediaLocalName", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -278,7 +278,7 @@ router.delete("/:boardID/profiles/:profileID/:mediaType/:mediaLocalName", async 
 	}
 });
 
-router.delete("/:boardID", async function (req, res, next) {
+router.delete("/:boardID", async (req, res, next) => {
 
 	var boardID = req.params.boardID;
 
@@ -301,7 +301,7 @@ router.delete("/:boardID", async function (req, res, next) {
 	}
 });
 
-router.get("/", async function (req, res, next) {
+router.get("/", async (req, res, next) => {
 
 	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 	var results = [];
@@ -314,7 +314,7 @@ router.get("/", async function (req, res, next) {
 	} 
 });
 
-router.get("/AddBoard/:boardID", async function (req, res, next) {
+router.get("/AddBoard/:boardID", async (req, res, next) => {
 
 	var newBoardID = req.params.boardID;
 
@@ -338,7 +338,7 @@ router.get("/AddBoard/:boardID", async function (req, res, next) {
 });
 
 
-router.post("/:boardID/profiles/:profileID/:mediaType/ReorderMedia", async function (req, res, next) {
+router.post("/:boardID/profiles/:profileID/:mediaType/ReorderMedia", async (req, res, next) => {
 
 	var mediaArray = req.body.mediaArray;
 	var boardID = req.params.boardID;
@@ -357,7 +357,7 @@ router.post("/:boardID/profiles/:profileID/:mediaType/ReorderMedia", async funct
 });
 
 
-router.post("/:boardID/profiles/:profileID/AddFileFromGDrive", async function (req, res, next) {
+router.post("/:boardID/profiles/:profileID/AddFileFromGDrive", async (req, res, next) => {
 
 	var oAuthToken = req.body.oauthToken;
 

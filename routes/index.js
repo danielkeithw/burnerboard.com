@@ -4,7 +4,7 @@ const UserStore = require("./UserStore");
 const BatteryQueries = require("./BatteryQueries");
 const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 
-router.use(async function (req, res, next) {
+router.use(async (req, res, next) => {
  
 	var JWT = req.headers["authorization"].replace("Bearer ", "");
 
@@ -28,7 +28,7 @@ router.get("/", function (req, res, next) {
 	res.status(400).send("Not Found");
 });
 
-router.get("/currentStatuses", async function (req, res, next) {
+router.get("/currentStatuses", async (req, res, next) => {
 
 	try {
 		var i = 1;
@@ -44,7 +44,7 @@ router.get("/currentStatuses", async function (req, res, next) {
 });
 
 
-router.get("/allProfiles/", async function (req, res, next) {
+router.get("/allProfiles/", async (req, res, next) => {
 
 	try {
 		var i = await DownloadDirectoryDS.listProfiles(null, null);

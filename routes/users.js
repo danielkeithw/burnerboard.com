@@ -5,7 +5,7 @@ router.get("/", function (req, res, next) {
 	res.status(400).send("Not Found");
 });
 
-router.post("/Auth", async function (req, res, next) {
+router.post("/Auth", async (req, res, next) => {
 
 	var JWT = req.headers["authorization"].replace("Bearer ","");
 	var results = [];
