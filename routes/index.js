@@ -1,6 +1,8 @@
-var express = require("express");
-var router = express.Router();
-var UserStore = require("./UserStore");
+const express = require("express");
+const router = express.Router();
+const UserStore = require("./UserStore");
+const BatteryQueries = require("./BatteryQueries");
+const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 
 router.use(async function (req, res, next) {
  
@@ -31,7 +33,6 @@ router.get("/currentStatuses", async function (req, res, next) {
 	try {
 		var i = 1;
 
-		const BatteryQueries = require("./BatteryQueries");
 		var results = [];
 
 		results = await BatteryQueries.queryBatteryData();
@@ -45,7 +46,6 @@ router.get("/currentStatuses", async function (req, res, next) {
 
 router.get("/allProfiles/", async function (req, res, next) {
 
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 	try {
 		var i = await DownloadDirectoryDS.listProfiles(null, null);
 		res.status(200).json(i);

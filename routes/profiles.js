@@ -1,7 +1,8 @@
 
-var express = require("express");
-var router = express.Router();
-
+const express = require("express");
+const router = express.Router();
+const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+const FileSystem = require("./FileSystem");
 
 router.post("/:profileID", async function (req, res, next) {
 
@@ -42,9 +43,6 @@ router.delete("/:profileID", async function (req, res, next) {
 
 	var profileID = req.params.profileID;
 
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
-	const FileSystem = require("./FileSystem");
-
 	try {
 		var profileExists = await DownloadDirectoryDS.profileExists(null, profileID);
 		var i;
@@ -64,8 +62,7 @@ router.delete("/:profileID", async function (req, res, next) {
 });
 
 router.get("/", async function (req, res, next) {
-
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+ 
 	try {
 		var i = await DownloadDirectoryDS.listGlobalProfiles(null);
 		res.status(200).json(i);
@@ -78,8 +75,7 @@ router.get("/", async function (req, res, next) {
 router.get("/:profileID", async function (req, res, next) {
 
 	var profileID = req.params.profileID;
-
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+ 
 	try {
 		var i = await DownloadDirectoryDS.listGlobalProfiles(profileID);
 		res.status(200).json(i);
@@ -91,7 +87,7 @@ router.get("/:profileID", async function (req, res, next) {
 
 
 router.get("/:profileID/DownloadDirectoryJSON", async function (req, res, next) {
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+ 
 	var profileID = req.params.profileID;
 	var result = [];
 	try {
@@ -111,9 +107,6 @@ router.delete("/:profileID/:mediaType/:mediaLocalName", async function (req, res
 	var mediaType = req.params.mediaType;
 	var mediaLocalName = req.params.mediaLocalName;
 
-	const FileSystem = require("./FileSystem");
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
-
 	try {
 		var results = [];
 		var mediaExists = await (DownloadDirectoryDS.mediaExists(boardID, profileID, mediaType, mediaLocalName));
@@ -132,8 +125,6 @@ router.delete("/:profileID/:mediaType/:mediaLocalName", async function (req, res
 });
 
 router.post("/:profileID/:mediaType/ReorderMedia", async function (req, res, next) {
-
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 
 	var mediaArray = req.body.mediaArray;
 	var boardID = null;
@@ -159,8 +150,6 @@ router.post("/:profileID/AddFileFromGDrive", async function (req, res, next) {
 	var fileId = req.body.fileId;
 	var profileID = req.params.profileID;
 	var results = [];
-
-	const FileSystem = require("./FileSystem");
 
 	try {
 		results = await FileSystem.addGDriveFile(null, profileID, fileId, oAuthToken);

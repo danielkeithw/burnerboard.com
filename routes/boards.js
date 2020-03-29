@@ -1,10 +1,12 @@
 
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+const BatteryQueries = require("./BatteryQueries");
+const FileSystem = require("./FileSystem");
 
 router.get("/", async function (req, res, next) {
 
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 	try {
 		var i = await DownloadDirectoryDS.listBoards(null);
 		res.status(200).json(i);
@@ -16,7 +18,6 @@ router.get("/", async function (req, res, next) {
 
 router.get("/locations/", async function (req, res, next) {
 
-	const BatteryQueries = require("./BatteryQueries");
 	try {
 		var i = await BatteryQueries.queryBoardLocations();
 		res.status(200).json(i);
@@ -29,8 +30,7 @@ router.get("/locations/", async function (req, res, next) {
 router.get("/:boardID", async function (req, res, next) {
 
 	var boardID = req.params.boardID;
-
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+ 
 	try {
 		var i = await DownloadDirectoryDS.listBoards(boardID);
 		res.status(200).json(i);
@@ -50,9 +50,6 @@ router.post("/:boardID/profiles/:profileID", async function (req, res, next) {
 		cloneFromBoardID = req.body.cloneFromBoardID;
 
 	var cloneFromProfileID = req.body.cloneFromProfileID;
-
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
-	const FileSystem = require("./FileSystem");
 
 	var results = [];
 
@@ -83,9 +80,6 @@ router.delete("/:boardID/profiles/:profileID", async function (req, res, next) {
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
 
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
-	const FileSystem = require("./FileSystem");
-
 	try {
 		var profileExists = await DownloadDirectoryDS.profileExists(boardID, profileID);
 		var i;
@@ -108,8 +102,7 @@ router.delete("/:boardID/profiles/:profileID", async function (req, res, next) {
 router.get("/:boardID/profiles", async function (req, res, next) {
 
 	var boardID = req.params.boardID;
-
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+ 
 	try {
 		var i = await DownloadDirectoryDS.listProfiles(boardID, null);
 		res.status(200).json(i);
@@ -123,8 +116,7 @@ router.get("/:boardID/profiles/:profileID", async function (req, res, next) {
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
-
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+ 
 	try {
 		var i = await DownloadDirectoryDS.listProfiles(boardID, profileID);
 		res.status(200).json(i);
@@ -136,8 +128,7 @@ router.get("/:boardID/profiles/:profileID", async function (req, res, next) {
 
 
 router.get("/:boardID/batteryHistory", async function (req, res, next) {
-
-	const BatteryQueries = require("./BatteryQueries");
+ 
 	var results = [];
 
 	try {
@@ -150,8 +141,6 @@ router.get("/:boardID/batteryHistory", async function (req, res, next) {
 });
 
 router.get("/:boardID/profiles/:profileID/listFiles", async function (req, res, next) {
-
-	const FileSystem = require("./FileSystem");
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -168,8 +157,6 @@ router.get("/:boardID/profiles/:profileID/listFiles", async function (req, res, 
 });
 
 router.post("/:boardID/activeProfile/:profileID/isGlobal/:isGlobal", async function (req, res, next) {
-
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
@@ -195,12 +182,9 @@ router.post("/:boardID/activeProfile/:profileID/isGlobal/:isGlobal", async funct
 
 router.post("/:boardID/deactivateProfile/:profileID/isGlobal/:isGlobal", async function (req, res, next) {
 
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
-
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
 	var isGlobal = req.params.isGlobal == "true";
-
 
 	try {
 		var boardExists = await DownloadDirectoryDS.boardExists(boardID);
@@ -218,7 +202,7 @@ router.post("/:boardID/deactivateProfile/:profileID/isGlobal/:isGlobal", async f
 
 });
 router.get("/:boardID/DownloadDirectoryJSON", async function (req, res, next) {
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+
 	var boardID = req.params.boardID;
 	var result = [];
 	try {
@@ -245,7 +229,7 @@ router.get("/:boardID/DownloadDirectoryJSON", async function (req, res, next) {
 });
 
 router.get("/:boardID/profiles/:profileID/DownloadDirectoryJSON", async function (req, res, next) {
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
+
 	var boardID = req.params.boardID;
 	var profileID = req.params.profileID;
 	var result = [];
@@ -273,9 +257,6 @@ router.delete("/:boardID/profiles/:profileID/:mediaType/:mediaLocalName", async 
 	var mediaType = req.params.mediaType;
 	var mediaLocalName = req.params.mediaLocalName;
 
-	const FileSystem = require("./FileSystem");
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
-
 	try {
 		var results = [];
 		var boardExists = await DownloadDirectoryDS.boardExists(boardID);
@@ -300,9 +281,6 @@ router.delete("/:boardID/profiles/:profileID/:mediaType/:mediaLocalName", async 
 router.delete("/:boardID", async function (req, res, next) {
 
 	var boardID = req.params.boardID;
-
-	const FileSystem = require("./FileSystem");
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 
 	try {
 		var results = [];
@@ -340,9 +318,6 @@ router.get("/AddBoard/:boardID", async function (req, res, next) {
 
 	var newBoardID = req.params.boardID;
 
-	const FileSystem = require("./FileSystem");
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
-
 	try {
 		var results = [];
 		var boardExists = await DownloadDirectoryDS.boardExists(newBoardID);
@@ -364,8 +339,6 @@ router.get("/AddBoard/:boardID", async function (req, res, next) {
 
 
 router.post("/:boardID/profiles/:profileID/:mediaType/ReorderMedia", async function (req, res, next) {
-
-	const DownloadDirectoryDS = require("./DownloadDirectoryDS");
 
 	var mediaArray = req.body.mediaArray;
 	var boardID = req.params.boardID;
@@ -392,8 +365,6 @@ router.post("/:boardID/profiles/:profileID/AddFileFromGDrive", async function (r
 	var currentBoard = req.params.boardID;
 	var profileID = req.params.profileID;
 	var results = [];
-
-	const FileSystem = require("./FileSystem");
 
 	try {
 		results = await FileSystem.addGDriveFile(currentBoard, profileID, fileId, oAuthToken);
