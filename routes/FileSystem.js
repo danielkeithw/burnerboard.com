@@ -1,8 +1,8 @@
 const constants = require("./Constants");
 const { Storage } = require("@google-cloud/storage");
 const storage = new Storage();
-const { google } = require('googleapis');
-const drive = google.drive("v2");
+const { google } = require("googleapis");
+const drive = google.drive("v3");
 const bucket = storage.bucket("burner-board");
 const ffmpegPath = require("ffmpeg-static").path;
 const ffmpeg = require("fluent-ffmpeg");
@@ -27,68 +27,70 @@ exports.filePath = function (boardID, profileID) {
 
 
 exports.getGDriveMetadata = async function (fileId, oauthToken) {
-	return new Promise((resolve, reject) => {
 
-		drive.files.get({
-			fileId: fileId,
-			"access_token": oauthToken,
-		}, function (err, jsonContent) {
+	try {
+ 
+		var jsonContent = await drive.files.get({
+			fileId,
+			fields: "size,mimeType,name",
+			access_token: oauthToken,
+		  });
+ 
+		fileAttributes = {
+			fileSize: parseInt(jsonContent.data.size),
+			mimeType: jsonContent.data.mimeType,
+			title: jsonContent.data.name,
+			songDuration: 0,
+		};
 
-			if (err)
-				return reject(err);
-			else {
-				fileAttributes = {
-					fileSize: parseInt(jsonContent.data.fileSize),
-					mimeType: jsonContent.data.mimeType,
-					title: jsonContent.data.title,
-					songDuration: 0,
-				};
-				resolve();
-			}
-		}
-		);
-	});
+	}
+	catch (error) {
+		console.log(error);
+	}
+ 
 };
 
-exports.getDriveContent = function (boardID, profileID, fileId, oauthToken) {
+exports.getDriveContent = async function (boardID, profileID, fileId, oauthToken) {
 
-	var module = this;
+	return new Promise(async (resolve, reject) => {
 
-	return new Promise((resolve, reject) => {
+		const axios = require("axios");
+		axios.defaults.headers.common = {
+			"Authorization": "Bearer " + oauthToken
+		};
 
-		drive.files.get({
-			fileId: fileId,
-			"access_token": oauthToken,
-			alt: "media"
-		}, { responseType: 'stream' }, function (err, content) {
+		try {
+			var resultStream = await axios({
+				method: "get",
+				url: "https://www.googleapis.com/drive/v3/files/" + fileId + "?alt=media",
+				responseType: "stream",
+			});
+		}
+		catch (error) {
+			return reject(error);
+		}
 
-			if (err)
-				return reject(new Error(err.response.status + " " + err.response.statusText));
-			else {
+		var filePath = module.filePath(boardID, profileID);
+		var file3 = bucket.file(filePath);
 
-				var filePath = module.filePath(boardID, profileID);
-
-				var file3 = bucket.file(filePath);
-				var fileStream3 = file3.createWriteStream({
-					metadata: {
-						contentType: fileAttributes.mimeType,
-					}
-				})
-					.on("error", (err) => {
-						return reject(err);
-					})
-					.on("finish", () => {
-						file3.makePublic();
-						return resolve();
-					});
-
-				content.data
-					.on("error", err => {
-						return reject(err);
-					})
-					.pipe(fileStream3);
+		var fileStream3 = file3.createWriteStream({
+			metadata: {
+				contentType: fileAttributes.mimeType,
 			}
+		})
+		fileStream3.on("error", (err) => {
+			return reject(err);
 		});
+		fileStream3.on("finish", () => {
+			file3.makePublic();
+			return resolve();
+		});
+
+		resultStream.data
+			.on("error", err => {
+				return reject(err);
+			})
+			.pipe(fileStream3);
 	});
 };
 
