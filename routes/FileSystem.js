@@ -4,7 +4,7 @@ const storage = new Storage();
 const { google } = require("googleapis");
 const drive = google.drive("v3");
 const bucket = storage.bucket("burner-board");
-const ffmpegPath = require("ffmpeg-static").path;
+const ffmpegPath = require("ffmpeg-static");
 const ffmpeg = require("fluent-ffmpeg");
 var ffprobe = require("ffprobe-static");
 ffmpeg.setFfmpegPath(ffmpegPath);
@@ -52,39 +52,39 @@ exports.getGDriveMetadata = async function (fileId, oauthToken) {
 
 exports.getDriveContent = async function (boardID, profileID, fileId, oauthToken) {
 
+	var filePath = this.filePath(boardID, profileID);
+	var file3 = bucket.file(filePath);
+	const axios = require("axios");
+
+	axios.defaults.headers.common = {
+		"Authorization": "Bearer " + oauthToken
+	};
+
+	try {
+		var resultStream = await axios({
+			method: "get",
+			url: "https://www.googleapis.com/drive/v3/files/" + fileId + "?alt=media",
+			responseType: "stream",
+		});
+	}
+	catch (error) {
+		return error;
+	}
+
 	return new Promise(async (resolve, reject) => {
-
-		const axios = require("axios");
-		axios.defaults.headers.common = {
-			"Authorization": "Bearer " + oauthToken
-		};
-
-		try {
-			var resultStream = await axios({
-				method: "get",
-				url: "https://www.googleapis.com/drive/v3/files/" + fileId + "?alt=media",
-				responseType: "stream",
-			});
-		}
-		catch (error) {
-			return reject(error);
-		}
-
-		var filePath = module.filePath(boardID, profileID);
-		var file3 = bucket.file(filePath);
 
 		var fileStream3 = file3.createWriteStream({
 			metadata: {
 				contentType: fileAttributes.mimeType,
 			}
 		})
-		fileStream3.on("error", (err) => {
-			return reject(err);
-		});
-		fileStream3.on("finish", () => {
-			file3.makePublic();
-			return resolve();
-		});
+			.on("error", (err) => {
+				return reject(err);
+			})
+			.on("finish", () => {
+				file3.makePublic();
+				return resolve();
+			});
 
 		resultStream.data
 			.on("error", err => {
