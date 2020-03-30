@@ -5,7 +5,7 @@ class GoogleLoginPage extends Component {
 
 	constructor(props) {
 		super(props);
- 
+
 		this.responseGoogle = this.props.responseGoogle.bind(this);
 
 		console.log("Clear the JWT from SessionStorage.");
@@ -32,7 +32,6 @@ class GoogleLoginPage extends Component {
 					"text-align": "center"
 				}}>
 
-					<img alt="" rel="bb" height="24" width="24" src={require("./images/google logo 64.png")} />
 					<GoogleLogin
 						clientId="845419422405-4e826kofd0al1npjaq6tijn1f3imk43p.apps.googleusercontent.com"
 						buttonText={this.props.buttonText}
@@ -46,7 +45,6 @@ class GoogleLoginPage extends Component {
 							"font-family": "sans-serif"
 						}}
 					/>
-					<img alt="" rel="bb" height="24" width="24" src={require("./images/google logo 64.png")} />
 				</div>
 			</div>
 		);
