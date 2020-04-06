@@ -52,6 +52,7 @@ class GlobalMenu extends React.Component {
 			showProfiles: false,
 			showMedia: false,
 			showMonitors: false,
+			showMasts: false,
 		};
 
 		this.handleInstructions = this.handleInstructions.bind(this);
@@ -156,7 +157,16 @@ class GlobalMenu extends React.Component {
 								</MenuItem>))
 							}
 						</MenuList>
-
+						<MenuList subheader={<ListSubheader className={classes.listSubheader} disableSticky={true} onClick={event => this.setState({ showMasts: !this.state.showMasts })}>Masts</ListSubheader>} className={classes.list} >
+							{this.props.boardNames.filter((item) => { return item.type === "mast"; }).map(item => (
+								<MenuItem onClick={event => { this.props.onSelectBoard(event, "board-" + item.board_name); this.setState({ showProfiles: true }); }}
+									key={"board-" + item.board_name}
+									selected={item.board_name === this.props.currentBoard}
+									style={{ display: this.state.showMasts ? "block" : "none" }}
+								> {item.board_name}
+								</MenuItem>))
+							}
+						</MenuList>
 
 						{/* // || this.props.activeProfiles[1].profile === item.profile_name */}
 						{(this.props.profileNames.length > 0 || this.props.globalProfileNames.length > 0) ?
