@@ -190,14 +190,9 @@ exports.listBoards = async function (boardID) {
 				.filter("isActive","=",true)
 				.order("name");
 
-		var results = await datastore.runQuery(boardQuery);
-
-		if (boardID == null)
-			results[0].splice(results[0].findIndex(board => {
-				return board.name == "template";
-			}), 1);
-
-		return (results[0]);
+		var results = (await datastore.runQuery(boardQuery))[0];
+ 
+		return results;
 
 	}
 	catch (error) {

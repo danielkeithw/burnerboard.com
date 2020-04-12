@@ -66,6 +66,7 @@ export default class BBApp extends Component {
 				}
 			});
 			var jsonResponse = await response.json();
+			
 			this.setState({
 				boardNames: jsonResponse.map(item => ({
 					board_name: item.name,
