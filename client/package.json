@@ -7,7 +7,7 @@
     "load-script": "^1.0.0",
     "material-ui": "^1.0.0-beta.29",
     "material-ui-icons": "^1.0.0-beta.36",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "pondjs": "^0.9.0",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^3.0.0",
