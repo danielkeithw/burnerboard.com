@@ -18,7 +18,7 @@
     "google-auth-library": "^6.0.0",
     "googleapis": "^48.0.0",
     "node-ffprobe": "^3.0.0",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "^5.0.1",
     "serve-favicon": "^2.5.0",
     "stream-buffers": "^3.0.2",
     "typescript": "^3.8.3",
