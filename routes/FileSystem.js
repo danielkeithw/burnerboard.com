@@ -112,8 +112,8 @@ exports.addGDriveFile = async function (boardID, profileID, fileId, oauthToken) 
 
 		var filePath = this.filePath(boardID, profileID);
 
-		if (!fileAttributes.title.endsWith("mp3") && !fileAttributes.title.endsWith("mp4") && !fileAttributes.title.endsWith("m4a"))
-			throw new Error("The file must have an mp3, or mp4 extension.");
+		if (!fileAttributes.title.endsWith("mp4") && !fileAttributes.title.endsWith("m4a"))
+			throw new Error("The file must have an m4a, or mp4 extension.");
 
 		var result = await this.checkForFileExists(boardID, profileID, fileAttributes.title);
 		if (result == true)
