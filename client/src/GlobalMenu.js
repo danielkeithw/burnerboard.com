@@ -48,12 +48,10 @@ class GlobalMenu extends React.Component {
 		this.state = {
 			showBoards: false,
 			showPanels: false,
-			showBackpacks: false,
+			showV4: false,
 			showProfiles: false,
 			showMedia: false,
 			showMonitors: false,
-			showMasts: false,
-			showWSPanels: false,
 		};
 
 		this.handleInstructions = this.handleInstructions.bind(this);
@@ -148,32 +146,12 @@ class GlobalMenu extends React.Component {
 								</MenuItem>))
 							}
 						</MenuList>
-						<MenuList subheader={<ListSubheader className={classes.listSubheader} disableSticky={true} onClick={event => this.setState({ showBackpacks: !this.state.showBackpacks })}>Backpacks</ListSubheader>} className={classes.list} >
-							{this.props.boardNames.filter((item) => { return item.type === "backpack"; }).map(item => (
+						<MenuList subheader={<ListSubheader className={classes.listSubheader} disableSticky={true} onClick={event => this.setState({ showV4: !this.state.showV4 })}>V4</ListSubheader>} className={classes.list} >
+							{this.props.boardNames.filter((item) => { return item.type === "v4"; }).map(item => (
 								<MenuItem onClick={event => { this.props.onSelectBoard(event, "board-" + item.board_name); this.setState({ showProfiles: true }); }}
 									key={"board-" + item.board_name}
 									selected={item.board_name === this.props.currentBoard}
-									style={{ display: this.state.showBackpacks ? "block" : "none" }}
-								> {item.board_name}
-								</MenuItem>))
-							}
-						</MenuList>
-						<MenuList subheader={<ListSubheader className={classes.listSubheader} disableSticky={true} onClick={event => this.setState({ showMasts: !this.state.showMasts })}>Masts</ListSubheader>} className={classes.list} >
-							{this.props.boardNames.filter((item) => { return item.type === "mast"; }).map(item => (
-								<MenuItem onClick={event => { this.props.onSelectBoard(event, "board-" + item.board_name); this.setState({ showProfiles: true }); }}
-									key={"board-" + item.board_name}
-									selected={item.board_name === this.props.currentBoard}
-									style={{ display: this.state.showMasts ? "block" : "none" }}
-								> {item.board_name}
-								</MenuItem>))
-							}
-						</MenuList>
-						<MenuList subheader={<ListSubheader className={classes.listSubheader} disableSticky={true} onClick={event => this.setState({ showWSPanels: !this.state.show })}>WSPanel</ListSubheader>} className={classes.list} >
-							{this.props.boardNames.filter((item) => { return item.type === "wspanel"; }).map(item => (
-								<MenuItem onClick={event => { this.props.onSelectBoard(event, "board-" + item.board_name); this.setState({ showProfiles: true }); }}
-									key={"board-" + item.board_name}
-									selected={item.board_name === this.props.currentBoard}
-									style={{ display: this.state.showWSPanels ? "block" : "none" }}
+									style={{ display: this.state.showV4 ? "block" : "none" }}
 								> {item.board_name}
 								</MenuItem>))
 							}
