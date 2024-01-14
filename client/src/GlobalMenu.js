@@ -48,7 +48,7 @@ class GlobalMenu extends React.Component {
 		this.state = {
 			showBoards: false,
 			showPanels: false,
-			showV4: false,
+			showMezcal: false,
 			showProfiles: false,
 			showMedia: false,
 			showMonitors: false,
@@ -146,12 +146,12 @@ class GlobalMenu extends React.Component {
 								</MenuItem>))
 							}
 						</MenuList>
-						<MenuList subheader={<ListSubheader className={classes.listSubheader} disableSticky={true} onClick={event => this.setState({ showV4: !this.state.showV4 })}>V4</ListSubheader>} className={classes.list} >
-							{this.props.boardNames.filter((item) => { return item.type === "v4"; }).map(item => (
+						<MenuList subheader={<ListSubheader className={classes.listSubheader} disableSticky={true} onClick={event => this.setState({ showMezcal: !this.state.showMezcal })}>Mezcal</ListSubheader>} className={classes.list} >
+							{this.props.boardNames.filter((item) => { return item.type === "Mezcal"; }).map(item => (
 								<MenuItem onClick={event => { this.props.onSelectBoard(event, "board-" + item.board_name); this.setState({ showProfiles: true }); }}
 									key={"board-" + item.board_name}
 									selected={item.board_name === this.props.currentBoard}
-									style={{ display: this.state.showV4 ? "block" : "none" }}
+									style={{ display: this.state.showMezcal ? "block" : "none" }}
 								> {item.board_name}
 								</MenuItem>))
 							}
