@@ -147,7 +147,7 @@ class GlobalMenu extends React.Component {
 							}
 						</MenuList>
 						<MenuList subheader={<ListSubheader className={classes.listSubheader} disableSticky={true} onClick={event => this.setState({ showMezcal: !this.state.showMezcal })}>Mezcal</ListSubheader>} className={classes.list} >
-							{this.props.boardNames.filter((item) => { return item.type === "Mezcal"; }).map(item => (
+							{this.props.boardNames.filter((item) => { return item.type === "mezcal"; }).map(item => (
 								<MenuItem onClick={event => { this.props.onSelectBoard(event, "board-" + item.board_name); this.setState({ showProfiles: true }); }}
 									key={"board-" + item.board_name}
 									selected={item.board_name === this.props.currentBoard}
