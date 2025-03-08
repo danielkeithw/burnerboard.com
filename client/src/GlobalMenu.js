@@ -53,6 +53,7 @@ class GlobalMenu extends React.Component {
 			showMedia: false,
 			showMonitors: false,
 			showMasts: false,
+			showLittlewing: false,
 		};
 
 		this.handleInstructions = this.handleInstructions.bind(this);
@@ -163,6 +164,16 @@ class GlobalMenu extends React.Component {
 									key={"board-" + item.board_name}
 									selected={item.board_name === this.props.currentBoard}
 									style={{ display: this.state.showMezcal ? "block" : "none" }}
+								> {item.board_name}
+								</MenuItem>))
+							}
+						</MenuList>
+						<MenuList subheader={<ListSubheader className={classes.listSubheader} disableSticky={true} onClick={event => this.setState({ showLittlewing: !this.state.showLittlewing })}>Littlewing</ListSubheader>} className={classes.list} >
+							{this.props.boardNames.filter((item) => { return item.type === "littlewing"; }).map(item => (
+								<MenuItem onClick={event => { this.props.onSelectBoard(event, "board-" + item.board_name); this.setState({ showProfiles: true }); }}
+									key={"board-" + item.board_name}
+									selected={item.board_name === this.props.currentBoard}
+									style={{ display: this.state.showLittlewing ? "block" : "none" }}
 								> {item.board_name}
 								</MenuItem>))
 							}
